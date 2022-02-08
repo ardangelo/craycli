@@ -242,9 +242,6 @@ def test_sls_hardware_create(cli_runner, rest_mock):
     hostname = config['hostname']
     result = runner.invoke(cli, ['sls', 'hardware', 'create',
                                  '--xname', Xname,
-                                 '--parent', Parent,
-                                 '--children', 'x0c0s0b[0-1]n[0-1]',
-                                 '--type', Type,
                                  '--class', Class])
 
     print(result.output)
@@ -253,10 +250,7 @@ def test_sls_hardware_create(cli_runner, rest_mock):
     assert data['method'].lower() == 'post'
     assert data.get('body')
     body = data.get('body')
-    assert body['Type'] == Type
     assert body['Xname'] == Xname
-    assert body['Children'] == Children
-    assert body['Parent'] == Parent
     assert body['Class'] == Class
     uri = data['url'].split(hostname)[-1]
     assert uri == url_template
@@ -458,9 +452,6 @@ def test_sls_hardware_update(cli_runner, rest_mock):
     hostname = config['hostname']
     result = runner.invoke(cli, ['sls', 'hardware', 'update', Xname,
                                  '--xname', Xname,
-                                 '--parent', Parent,
-                                 '--children', 'x0c0s0b[0-1]n[0-1]',
-                                 '--type', Type,
                                  '--class', Class])
 
     print(result.output)
@@ -469,9 +460,6 @@ def test_sls_hardware_update(cli_runner, rest_mock):
     assert data['method'].lower() == 'put'
     assert data.get('body')
     body = data.get('body')
-    assert body['Type'] == Type
-    assert body['Children'] == Children
-    assert body['Parent'] == Parent
     assert body['Class'] == Class
     uri = data['url'].split(hostname)[-1]
     assert uri == url_template+'/'+Xname
