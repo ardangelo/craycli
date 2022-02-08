@@ -871,10 +871,12 @@ components:
       properties:
         Parent:
           $ref: '#/components/schemas/xname'
+          readOnly: true
         Xname:
           $ref: '#/components/schemas/xname'
         Children:
           type: array
+          readOnly: true
           items:
             $ref: '#/components/schemas/xname'
         Type:
@@ -886,11 +888,12 @@ components:
           $ref: '#/components/schemas/hwclass'
         LastUpdated:
           $ref: '#/components/schemas/last_updated'
+          readOnly: true
         LastUpdatedTime:
           $ref: '#/components/schemas/last_updated_time'
+          readOnly: true
         ExtraProperties:
-          type: object
-          additionalProperties: true
+          type: string
     hardware_bmc:
       type: object
       required: ["IP6addr", "IP4addr"]
