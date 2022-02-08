@@ -68,6 +68,10 @@ info:
     ### /networks
     
     Create new network objects or retrieve networks available in the system.
+
+    ### /networks/{network}
+    
+    Retrieve, update, or delete information about specific networks.
     
     ### /dumpstate
     
@@ -320,6 +324,8 @@ paths:
           description: "Bad request.  See body for details"
         409:
           description: "Conflict.  The requested resource already exists"
+        500:
+          description: "Unexpected error. See body for details"
   /hardware/{xname}:
     parameters:
       - in: path
@@ -351,7 +357,6 @@ paths:
             schema:
               $ref: '#/components/schemas/hardware'
             example:
-              xname: "x0c1s2b0n1"
               class: "River"
       responses:
         200:
@@ -360,10 +365,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/hardware'
+        201:
+          description: "Created. Item successfully created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hardware'
         400:
-          description: "Bad request.  See body for details"
-        409:
-          description: "Conflict.  The requested resource already exists"
+          description: "Bad request. See body for details"
+        500:
+          description: "Unexpected error. See body for details"
     delete:
       tags: ["hardware"]
       summary: "Delete the xname"
@@ -450,6 +461,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/hardware'
+        400:
+          description: "Bad request. See body for details."
+        404:
+          description: "Search did not find any matching hardware."
+        500:
+          description: "An unexpected error occurred. See body for details."
   /search/networks:
     get:
       tags: ["search"]
@@ -491,7 +508,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/network'
-
   /networks:
     get:
       tags: ["network"]
@@ -692,6 +708,7 @@ components:
 
     network:
       type: object
+      required: ["Name", "IPRanges"]
       properties:
         Name:
           type: string
@@ -711,8 +728,7 @@ components:
         LastUpdatedTime:
           $ref: '#/components/schemas/last_updated_time'
         ExtraProperties:
-          # The properties for a network aren't well defined and are intended mostly for use by the DHCP service.
-          type: object
+          $ref: '#/components/schemas/network_extra_properties'
     network_ip_range:
       type: string
       pattern: "[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/[0-9]{1,2}|[0-9a-fA-F:]+/[0-9]{1,3}"
@@ -720,6 +736,77 @@ components:
       type: string
       pattern: "sligshot10|cassini|ethernet|OPA|infiniband|mixed"
       example: "slingshot10"
+    network_extra_properties:
+      type: object
+      properties:
+        CIDR:
+          type: string
+          pattern: "[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/[0-9]{1,2}|[0-9a-fA-F:]+/[0-9]{1,3}"
+          example: "10.253.0.0/16"
+        VlanRange:
+          type: array
+          items:
+            type: integer
+        MTU:
+          type: integer
+          example: 9000
+        Subnets:
+          type: array
+          items:
+            $ref: '#/components/schemas/network_ipv4_subnet'
+        Comment:
+          type: string
+    network_ipv4_subnet:
+      type: object
+      required: ["Name", "CIDR", "VlanID"]
+      properties:
+        Name:
+          type: string
+          pattern: "[^ ]+"
+          example: cabinet_1008_hsn"
+        FullName:
+          type: string
+          example: "Cabinet 1008 HSN"
+        CIDR:
+          type: string
+          pattern: "[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/[0-9]{1,2}|[0-9a-fA-F:]+/[0-9]{1,3}"
+          example: "10.253.0.0/16"
+        VlanID:
+          type: integer
+          example: 60
+        Gateway:
+          type: string
+          format: ipv4
+        DHCPStart:
+          type: string
+          format: ipv4
+        DHCPEnd:
+          type: string
+          format: ipv4
+        IPReservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/network_ip_reservation'
+        Comment:
+          type: string
+    network_ip_reservation:
+      type: object
+      required: ["IPAddress", "Name"]
+      properties:
+          IPAddress:
+            type: string
+            format: ipv4
+          Name:
+            type: string
+            pattern: "[^ ]+"
+            example: "S3"
+          Aliases:
+            type: array
+            items:
+              type: string
+              example: "rgw-vip.local"
+          Comment:
+            type: string            
 
 
     xname:
@@ -780,7 +867,7 @@ components:
             - $ref: '#/components/schemas/hardware_comptype_nodecard'
     hardware:
       type: object
-      required: ["Xname"]
+      required: ["Xname", "Class"]
       properties:
         Parent:
           $ref: '#/components/schemas/xname'
