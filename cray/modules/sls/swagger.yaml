@@ -881,6 +881,7 @@ components:
           $ref: '#/components/schemas/hwtype'
         TypeString:
           type: string
+          readOnly: true
         Class:
           $ref: '#/components/schemas/hwclass'
         LastUpdated:
@@ -888,19 +889,8 @@ components:
         LastUpdatedTime:
           $ref: '#/components/schemas/last_updated_time'
         ExtraProperties:
-          oneOf:
-            - $ref: '#/components/schemas/hardware_comptype_hsn_connector'
-            - $ref: '#/components/schemas/hardware_pwr_connector'
-            - $ref: '#/components/schemas/hardware_mgmt_switch_connector'
-            - $ref: '#/components/schemas/hardware_comptype_rtr_bmc'
-            - $ref: '#/components/schemas/hardware_comptype_bmc_nic'
-            - $ref: '#/components/schemas/hardware_nic'
-            - $ref: '#/components/schemas/hardware_comptype_rtmod'
-            - $ref: '#/components/schemas/hardware_comptype_mgmt_switch'
-            - $ref: '#/components/schemas/hardware_comptype_compmod'
-            - $ref: '#/components/schemas/hardware_comptype_cab_pdu'
-            - $ref: '#/components/schemas/hardware_comptype_node'
-            - $ref: '#/components/schemas/hardware_comptype_nodecard'
+          type: object
+          additionalProperties: true
     hardware_bmc:
       type: object
       required: ["IP6addr", "IP4addr"]
