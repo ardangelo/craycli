@@ -1,0 +1,10 @@
+add_exclude:
+  - ".license_check.yaml"
+  - "api/openapi.yaml"
+  - "cray/modules/bos/openapi.yaml"
+  - "cray/modules/cps/openapi.yaml"
+  - "cray/modules/fas/swagger.yaml"
+  - "cray/modules/ims/openapi.yaml"
+  - "cray/modules/nmd/openapi.yaml"
+  - "cray/modules/sls/swagger.yaml"
+  - "cray/modules/vnid/swagger.yaml"
