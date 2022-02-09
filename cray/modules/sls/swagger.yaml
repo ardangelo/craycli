@@ -355,7 +355,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/hardware'
+              $ref: '#/components/schemas/hardware_put'
             example:
               class: "River"
       responses:
@@ -815,8 +815,16 @@ components:
       pattern: "^s0$|^d([0-9]+)$|^x([0-9]{1,4})d([0-1])$|^x([0-9]{1,4})m([0-3])$|^x([0-9]{1,4})m([0-3])p([0-7])$|^x([0-9]{1,4})m([0-3])i([0-3])$|^x([0-9]{1,4})m([0-3])p([0-7])j([1-9][0-9]*)$|^x([0-9]{1,4})e([0-1])$|^x([0-9]{1,4})$|^x([0-9]{1,4})b([0])$|^x([0-9]{1,4})c([0-7])$|^x([0-9]{1,4})c([0-7])b([0])$|^x([0-9]{1,4})c([0-7])f([0])$|^x([0-9]{1,4})c([0-7])t([0-2])$|^x([0-9]{1,4})c([0-7])s([0-9]+)$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)f([0])$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)i([0-3])$|^x([0-9]{1,4})c([0-7])s([0-9]+)e([0-9]+)$|^x([0-9]{1,4})c([0-7])s([0-9]+)j([1-2])$|^x([0-9]{1,4})c([0-7])r([0-9]+)e([0-9]+)$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)i([0-3])$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)h([0-3])$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)a([0-7])$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)d([0-9]+)$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)p([0-3])$|^x([0-9]{1,4})c([0-7])r([0-9]+)$|^x([0-9]{1,4})c([0-7])r([0-9]+)f([01])$|^x([0-9]{1,4})c([0-7])r([0-9]+)t([0-9]+)f([0-1])$|^x([0-9]{1,4})c([0-7])r([0-9]+)b([0-9]+)$|^x([0-9]{1,4})c([0-7])r([0-9]+)b([0-9]+)i([0-3])$|^x([0-9]{1,4})c([0-7])r([0-9]+)a([0-3])$|^x([0-9]{1,4})c([0-7])r([0-9]+)j([1-9][0-9]*)$|^x([0-9]{1,4})c([0-7])r([0-9]+)j([1-9][0-9]*)p([012])$|^x([0-9]{1,4})c([0-7])r([0-9]+)a([0-3])l([0-9]+)$|^x([0-9]{1,4})c([0-7])w([1-9][0-9]*)$|^x([0-9]{1,4})c([0-7])w([0-9]+)j([1-9][0-9]*)$"
       description: "The xname of this piece of hardware"
       example: "x0c0s0b0"
+    xname_readonly:
+      type: string
+      readOnly: true
+      # This string should be generated using the command "grep regexp.MustCompile pkg/base/hmstypes.go | grep -v -e 'INVALID' -e 'all_*' -e '\^p' -e '\^sms' | awk -F'"' '{print $2}' | tr '\n' '|'" from the root of the hsm-common repository whenever the hmstypes.go file is updated
+      pattern: "^s0$|^d([0-9]+)$|^x([0-9]{1,4})d([0-1])$|^x([0-9]{1,4})m([0-3])$|^x([0-9]{1,4})m([0-3])p([0-7])$|^x([0-9]{1,4})m([0-3])i([0-3])$|^x([0-9]{1,4})m([0-3])p([0-7])j([1-9][0-9]*)$|^x([0-9]{1,4})e([0-1])$|^x([0-9]{1,4})$|^x([0-9]{1,4})b([0])$|^x([0-9]{1,4})c([0-7])$|^x([0-9]{1,4})c([0-7])b([0])$|^x([0-9]{1,4})c([0-7])f([0])$|^x([0-9]{1,4})c([0-7])t([0-2])$|^x([0-9]{1,4})c([0-7])s([0-9]+)$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)f([0])$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)i([0-3])$|^x([0-9]{1,4})c([0-7])s([0-9]+)e([0-9]+)$|^x([0-9]{1,4})c([0-7])s([0-9]+)j([1-2])$|^x([0-9]{1,4})c([0-7])r([0-9]+)e([0-9]+)$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)i([0-3])$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)h([0-3])$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)a([0-7])$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)d([0-9]+)$|^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)p([0-3])$|^x([0-9]{1,4})c([0-7])r([0-9]+)$|^x([0-9]{1,4})c([0-7])r([0-9]+)f([01])$|^x([0-9]{1,4})c([0-7])r([0-9]+)t([0-9]+)f([0-1])$|^x([0-9]{1,4})c([0-7])r([0-9]+)b([0-9]+)$|^x([0-9]{1,4})c([0-7])r([0-9]+)b([0-9]+)i([0-3])$|^x([0-9]{1,4})c([0-7])r([0-9]+)a([0-3])$|^x([0-9]{1,4})c([0-7])r([0-9]+)j([1-9][0-9]*)$|^x([0-9]{1,4})c([0-7])r([0-9]+)j([1-9][0-9]*)p([012])$|^x([0-9]{1,4})c([0-7])r([0-9]+)a([0-3])l([0-9]+)$|^x([0-9]{1,4})c([0-7])w([1-9][0-9]*)$|^x([0-9]{1,4})c([0-7])w([0-9]+)j([1-9][0-9]*)$"
+      description: "The xname of this piece of hardware"
+      example: "x0c0s0b0"
     hwtype:
       type: string
+      readOnly: true
       # Regenerate thispattern by running "grep "HMSType = " pkg/base/hmstypes.go | awk '{print "^" $4 "$"}' | tr -d '"' | grep -v -e INVALID -e 'All*' -e Partition | tr '\n' '|'"
       pattern: "^CDU$|^CabinetCDU$|^Cabinet$|^CabinetBMC$|^CabinetPDUController$|^CabinetPDU$|^CabinetPDUNic$|^CabinetPDUOutlet$|^Chassis$|^ChassisBMC$|^CMMRectifier$|^CMMFpga$|^CEC$|^ComputeModule$|^RouterModule$|^NodeBMC$|^NodeBMCNic$|^NodeEnclosure$|^NodePowerConnector$|^Node$|^Processor$|^NodeNIC$|^NodeHsnNIC$|^Memory$|^NodeAccel$|^NodeFpga$|^HSNAsic$|^RouterFpga$|^RouterTORFpga$|^RouterBMC$|^RouterBMCNic$|^HSNBoard$|^HSNLink$|^HSNConnector$|^HSNConnectorPort$|^MgmtSwitch$|^MgmtSwitchConnector$|^SMSBox$|^System$"
       description: "The type of this piece of hardware.  This is an optional hint during upload; it will be ignored if it does not match the xname"
@@ -828,9 +836,11 @@ components:
       example: "Mountain"
     last_updated:
       type: integer
+      readOnly: true
       description: "The unix timestamp of the last time this entry was created or updated"
     last_updated_time:
       type: string
+      readOnly: true
       description: "The human-readable time this object was last created or updated."
 
     hardware_dump:
@@ -865,13 +875,38 @@ components:
             - $ref: '#/components/schemas/hardware_comptype_cab_pdu'
             - $ref: '#/components/schemas/hardware_comptype_node'
             - $ref: '#/components/schemas/hardware_comptype_nodecard'
+    hardware_put:
+      type: object
+      required: ["Class"]
+      properties:
+        Parent:
+          $ref: '#/components/schemas/xname_readonly'
+        Xname:
+          $ref: '#/components/schemas/xname_readonly'
+        Children:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/xname'
+        Type:
+          $ref: '#/components/schemas/hwtype'
+        TypeString:
+          type: string
+          readOnly: true
+        Class:
+          $ref: '#/components/schemas/hwclass'
+        LastUpdated:
+          $ref: '#/components/schemas/last_updated'
+        LastUpdatedTime:
+          $ref: '#/components/schemas/last_updated_time'
+        ExtraProperties:
+          type: string
     hardware:
       type: object
       required: ["Xname", "Class"]
       properties:
         Parent:
-          $ref: '#/components/schemas/xname'
-          readOnly: true
+          $ref: '#/components/schemas/xname_readonly'
         Xname:
           $ref: '#/components/schemas/xname'
         Children:
@@ -888,10 +923,8 @@ components:
           $ref: '#/components/schemas/hwclass'
         LastUpdated:
           $ref: '#/components/schemas/last_updated'
-          readOnly: true
         LastUpdatedTime:
           $ref: '#/components/schemas/last_updated_time'
-          readOnly: true
         ExtraProperties:
           type: string
     hardware_bmc:
